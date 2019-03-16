@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% include 'includes/css.html' %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cerulean/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>{% block title %}system management{% endblock %}</title>
+    </head>
+    <body>
+{#        {% include 'includes/nav_bar.html' %}#}
+        <div class="container">
+            {% include 'includes/nav_bar.html' %}
+            {% block body %}
+            {% endblock %}
+        </div>
+        {% include 'includes/js.html' %}
+    </body>
+</html>

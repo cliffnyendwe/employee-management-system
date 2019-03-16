@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load mathfilters %}
+
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center"><i class="fa fa-user"></i> {{ object.first_name }}</h3>
+            <br>
+            <div class="col-sm-6">
+                <br>
+                <p class="lead"><b>First Name : </b>{{ object.first_name }}</p>
+                <br>
+                <p class="lead"><b>Lat Name : </b>{{ object.last_name }}</p>
+                <br>
+                <p class="lead"><b>Phone Number : </b>{{ object.phone_number }}</p>
+                <br>
+                <p class="lead"><b>Email : </b>{{ object.email}}</p>
+                <br>
+                <p class="lead"><b>Job : </b>{{ object.job}}</p>
+                <br>
+                <p class="lead"><b>Employee Unique ID : </b>{{ object.employee_unique_id }}</p>
+                <br>
+                <p class="lead"><b>Department : </b>{{ object.department }}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}
