@@ -3,9 +3,11 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 
 
+# This is the model for the eployees and its field
 class Employees(models.Model):
 
     Department_CHOICES = [
+        ('employee', 'employee'),
         ('FINANCE', 'FINANCE'),
         ('HR', 'HR'),
         ('MARKETING', 'MARKETING'),
@@ -13,12 +15,11 @@ class Employees(models.Model):
         ('R%D', 'R%D'),
     ]
  
-    first_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255) 
     last_name = models.CharField(max_length=255)
     employee_unique_id = models.CharField(max_length = 10)
     department = models.CharField(choices=Department_CHOICES, max_length=25)
-    job = models.CharField(max_length=255, null=True)
-    freeze = models.BooleanField(default=False)
+    contract = models.CharField(max_length=255, null=True)
     updated = models.DateTimeField(auto_now=True)
     phone_number = models.PositiveIntegerField()
     email = models.EmailField(max_length = 60, default = '@gmail.com')
@@ -29,12 +30,12 @@ class Employees(models.Model):
     def get_absolute_url(self):
         return reverse('employees:detail', kwargs={'pk': self.pk})
 
-
+# This is the function for saving employee's department
 def post_save_employee_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        qs = Employees.objects.filter(id=instance.id, employee_unique_id=instance.employee_unique_id)
-        if qs.exists() and qs.count() == 1:
-            employee = qs.first()
+        co = Employees.objects.filter(id=instance.id, employee_unique_id=instance.employee_unique_id)
+        if co.exists() and co.count() == 1:
+            employee = co.first()
             department = employee.department
             if department == 'FINANCE':
                 employee.save()

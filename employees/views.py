@@ -10,11 +10,7 @@ from django.views.generic import (
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
 
-from .forms import (
-    AddEmployeeForm,
-    UpdateEmployeeForm,
-
-)
+from .forms import (AddEmployeeForm, UpdateEmployeeForm,)
 from .models import Employees
 
 
@@ -24,8 +20,8 @@ class AllEmployeesView(ListView):
     # template_name = 'employees/all_employees_table.html'
 
     def get_queryset(self):
-        qs = Employees.objects.filter().order_by('-id')
-        return qs
+        co = Employees.objects.filter().order_by('-id')
+        return co
 
     def get_context_data(self, **kwargs):
         context = super(AllEmployeesView, self).get_context_data(**kwargs)
@@ -38,8 +34,8 @@ class EmployeeDetailView(DetailView):
     template_name = 'employees/employee_detail.html'
 
     def get_queryset(self):
-        qs = Employees.objects.filter(id=self.kwargs['pk'])
-        return qs
+        co = Employees.objects.filter(id=self.kwargs['pk'])
+        return co
 
     def get_context_data(self, **kwargs):
         context = super(EmployeeDetailView, self).get_context_data(**kwargs)
@@ -57,7 +53,6 @@ class AddEmployeeView(CreateView):
         context['title'] = 'Add Employee'
         return context
 
-
 # update employee information except salary
 class EmployeeUpdateView(UpdateView):
     form_class = UpdateEmployeeForm
@@ -65,8 +60,8 @@ class EmployeeUpdateView(UpdateView):
     template_name = 'employees/employee_update.html'
 
     def get_queryset(self):
-        qs = Employees.objects.filter(id=self.kwargs['pk'])
-        return qs
+        co = Employees.objects.filter(id=self.kwargs['pk'])
+        return co
 
     def get_context_data(self, **kwargs):
         context = super(EmployeeUpdateView, self).get_context_data(**kwargs)
@@ -74,21 +69,37 @@ class EmployeeUpdateView(UpdateView):
         return context
 
 
-# delete employee if not connected to a job
+# delete employee if not connected to a contract
 class EmployeeDeleteView(DeleteView):
     template_name = 'employees/employee_detail.html'
 
     def post(self, *args, **kwargs):
-        qs = Employees.objects.filter(id=self.kwargs['pk'])
-        job_status = qs.job
-        if job_status is None or job_status == '':
-            qs.delete()
+        co = Employees.objects.filter(id=self.kwargs['pk'], freeze=False).first()
+        contract_status = co.contract
+        if contract_status is None or contract_status == '':
+            co.delete()
             return redirect(reverse('employees:all'))
         else:
-            qs.freeze = True
-            qs.save()
-            messages.error(self.request, 'you can not delete this employee because he has a job')
+            co.freeze = True
+            co.save()
+            messages.error(self.request, 'you can not delete this employee because he has a contract')
             return redirect(reverse('employees:all'))
+
+
+def index(request):
+    user_list = User.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(user_list, 10)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
+    return render(request, 'list.html', { 'users': users })
+
 
 
 

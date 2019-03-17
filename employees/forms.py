@@ -1,7 +1,6 @@
 from django import forms
 from .models import Employees
 
-
 class AddEmployeeForm(forms.ModelForm):
     first_name = forms.CharField(label='First name', widget=forms.TextInput(
         attrs={
@@ -15,8 +14,6 @@ class AddEmployeeForm(forms.ModelForm):
             'class': 'form-control',
         }))
 
-    
-
     employee_unique_id = forms.CharField(label='Employee Unique ID', widget=forms.TextInput(
         attrs={
             'placeholder': 'Employee Unique ID',
@@ -29,9 +26,9 @@ class AddEmployeeForm(forms.ModelForm):
             'placeholder': 'Department',
             'class': 'form-control',
         }))
-    job = forms.CharField(label='Job', required=False, widget=forms.TextInput(
+    contract = forms.CharField(label='Contract', required=False, widget=forms.TextInput(
         attrs={
-            'placeholder': 'Job',
+            'placeholder': 'Contract',
             'class': 'form-control',
         }))
    
@@ -50,16 +47,15 @@ class AddEmployeeForm(forms.ModelForm):
             'last_name',
             'phone_number',
             'employee_unique_id',
-            'job',
+            'contract',
             'department',
             'email',
-         
         ]
 
     def clean_employee_unique_id(self):
         employee_unique_id = self.cleaned_data.get('employee_unique_id')
-        qs = Employees.objects.filter(employee_unique_id=employee_unique_id)
-        if qs.exists():
+        co = Employees.objects.filter(employee_unique_id=employee_unique_id)
+        if co.exists():
             raise forms.ValidationError('This Employee is already Added before!')
         if int(employee_unique_id) <= 9:
             raise forms.ValidationError('Employee Unique ID must be bigger than 10!')
@@ -93,13 +89,12 @@ class UpdateEmployeeForm(forms.ModelForm):
             'placeholder': 'Department',
             'class': 'form-control',
         }))
-    job = forms.CharField(label='Job', required=False, widget=forms.TextInput(
+    contract = forms.CharField(label='Contract', required=False, widget=forms.TextInput(
         attrs={
-            'placeholder': 'Job',
+            'placeholder': 'Contract',
             'class': 'form-control',
         }))
    
-  
     email = forms.EmailField(label='Email', widget=forms.TextInput(
         attrs={
             'placeholder': 'Email',
@@ -114,7 +109,7 @@ class UpdateEmployeeForm(forms.ModelForm):
             'last_name',
             'phone_number',
             'employee_unique_id',
-            'job',
+            'contract',
             'department',
             'email',
          

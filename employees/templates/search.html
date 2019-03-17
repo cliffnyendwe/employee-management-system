@@ -1,0 +1,33 @@
+{%extends 'all-photos/base.html'%}
+{% block content %}
+  <div class="row">
+    {% if searched_departments %}
+    {% for department in searched_departments %}
+
+    {% endfor %}
+    {% endif %}
+    {% if searched_departments%}
+    <h2>Found {{ searched_departments|length }} departments for the searched term
+      '{{message}}'</h2>
+    {% else %}
+    <h2> Found 0 departments for the search term {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  {% if searched_departments%}
+  <div class="row">
+    {% for department in searched_departments %}
+    <div class="col-md-3 col-lg-4">
+      <div class="card">
+        <!-- department -->
+        <img class="gallery-item" src="{{department.department.url}}" style="width: 400px;height:300px" alt="{{ department.name }}"
+          data-toggle="modal" data-target="#a{{ department.id }}">
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

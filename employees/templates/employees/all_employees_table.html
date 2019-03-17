@@ -12,7 +12,7 @@
             <th>Last Name</th>
             <th>Phone Number</th>
             <th>Email</th>
-            <th>Job</th>
+            <th>Contract</th>
             <th>Department</th>
             <th>Update</th>
           
@@ -26,14 +26,7 @@
             <td>{{ emp.phone_number }}</td>
             <td>{{ emp.email }}</td>
             <td>{{ emp.department }}</td>
-            <td>{{ emp.job }}</td>
-            {% if emp.freeze == True %}
-              <td>
-                  <span style="color: #f00; margin-top: 18px;">This employee is frozen</span>
-              </td>
-                <td></td>
-                <td></td>
-            {% else %}
+            <td>{{ emp.contract }}</td>
             <td>
                 <a href="{% url 'employees:update' emp.id %}" class="btn btn-info btn-raised btn-sm">
                     <i class="fa fa-user"></i> Edit
