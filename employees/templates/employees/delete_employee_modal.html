@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="delete_employee{{ emp.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete_employee{{ work.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="border-radius: 6px;">
       <div class="modal-header">
@@ -9,13 +9,13 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete employee {{ emp.first_name }}?
+        Are you sure you want to delete employee {{ work.first_name }}?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <form method="POST" action="{% url 'employees:delete' emp.id %}" style="display: inline-block;">
+        <form method="POST" action="{% url 'employees:delete' work.id %}" style="display: inline-block;">
             {% csrf_token %}
-            <a href="{% url 'employees:delete' emp.id %}">
+            <a href="{% url 'employees:delete' work.id %}">
                 <button class="btn btn-danger">
                     Confirm Delete
                 </button>

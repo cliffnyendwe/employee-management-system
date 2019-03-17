@@ -50,7 +50,7 @@ class AddEmployeeView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AddEmployeeView, self).get_context_data(**kwargs)
-        context['title'] = 'Add Employee'
+        context['title'] = 'New Employee'
         return context
 
 # update employee information except salary

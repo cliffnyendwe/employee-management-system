@@ -15,11 +15,11 @@ class Employees(models.Model):
         ('R%D', 'R%D'),
     ]
  
-    first_name = models.CharField(max_length=255) 
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=60) 
+    last_name = models.CharField(max_length=60)
     employee_unique_id = models.CharField(max_length = 10)
     department = models.CharField(choices=Department_CHOICES, max_length=25)
-    contract = models.CharField(max_length=255, null=True)
+    contract = models.CharField(max_length=60, null=True)
     updated = models.DateTimeField(auto_now=True)
     phone_number = models.PositiveIntegerField()
     email = models.EmailField(max_length = 60, default = '@gmail.com')
@@ -33,7 +33,7 @@ class Employees(models.Model):
 # This is the function for saving employee's department
 def post_save_employee_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        co = Employees.objects.filter(id=instance.id, employee_unique_id=instance.employee_unique_id)
+        co = Employees.objects.filter(id=instance.id, department=instance.department)
         if co.exists() and co.count() == 1:
             employee = co.first()
             department = employee.department

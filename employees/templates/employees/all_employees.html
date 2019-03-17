@@ -1,30 +1,23 @@
 {% extends 'base.html' %}
-
-{% block title %}
-    {{ title }} | {{ block.super }}
-{% endblock %}
-
 {% block body %}
     <div class="row">
-      
         <br>
-        <br>
-        {% for emp in object_list %}
+        {% for work in object_list %}
             <div class="col-sm-4">
             <div class="thumbnail">
               <div class="caption">
-                <h2><a href="{% url 'employees:detail' emp.id %}">{{ emp.first_name }}</a></h2>
-                <p>Email : {{ emp.email }}</p>
-                <p>phone Number : {{ emp.phone_number }}</p>
-                <p>Department : {{ emp.department }}</p>
-              {% if emp.freeze == True %}
+                <h2><a href="{% url 'employees:detail' work.id %}">{{ work.first_name | upper}}</a></h2>
+                <p>Email : {{ work.email }}</p>
+                <p>phone Number : {{ work.phone_number }}</p>
+                <p>Department : {{ work.department }}</p>
+              {% if work.freeze == True %}
                   <p class="lead text-center" style="color: #f00; margin-top: 18px;">This employee is frozen</p>
               {% else %}
-                <a href="{% url 'employees:update' emp.id %}" class="btn btn-info btn-raised btn-lg">
-                    <i class="fa fa-user"></i>Edit
+                <a href="{% url 'employees:update' work.id %}" class="btn btn-info btn-raised btn-lg">
+                    <i class="fa fa-user"></i>Edit Employee
                 </a>
                 <!-- Button trigger modal -->
-                <button class="btn btn-danger btn-raised btn-lg" href="" data-toggle="modal" data-target="#delete_employee{{ emp.id }}">
+                <button class="btn btn-danger btn-raised btn-lg" href="" data-toggle="modal" data-target="#delete_employee{{ work.id }}">
                     <i class="fa fa-times"></i> Delete
                 </button>
                   
@@ -36,10 +29,4 @@
             <p class="lead text-center">There are no employ record at the moment</p>
         {% endfor %}
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 {% endblock %}

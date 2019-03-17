@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
-
-
-
 {% block content %}
   
-
     <table class="table table-striped">
         <thead>
           <tr>
@@ -21,14 +17,14 @@
         <tbody>
         {% for emp in object_list %}
           <tr>
-            <td><a href="{% url 'employees:detail' emp.id %}">{{ emp.first_name }}</a></td>
-            <td>{{ emp.last_name}}</td>
-            <td>{{ emp.phone_number }}</td>
-            <td>{{ emp.email }}</td>
-            <td>{{ emp.department }}</td>
-            <td>{{ emp.contract }}</td>
+            <td><a href="{% url 'employees:detail' work.id %}">{{ work.first_name }}</a></td>
+            <td>{{ work.last_name}}</td>
+            <td>{{ work.phone_number }}</td>
+            <td>{{ work.email }}</td>
+            <td>{{ work.department }}</td>
+            <td>{{ work.contract }}</td>
             <td>
-                <a href="{% url 'employees:update' emp.id %}" class="btn btn-info btn-raised btn-sm">
+                <a href="{% url 'employees:update' work.id %}" class="btn btn-info btn-raised btn-sm">
                     <i class="fa fa-user"></i> Edit
                 </a>
             </td>
