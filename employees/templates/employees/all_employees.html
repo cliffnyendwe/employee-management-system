@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="row">
+    <div class="row pb-5">
         <br>
-        {% for work in object_list %}
+        {% for work in users %}
             <div class="col-sm-4">
             <div class="thumbnail">
               <div class="caption">
                 <h2><a href="{% url 'employees:detail' work.id %}">{{ work.first_name | upper}}</a></h2>
                 <p>Email : {{ work.email }}</p>
                 <p>phone Number : {{ work.phone_number }}</p>
-                <p>Department : {{ work.department }}</p>
+                <p>Department : {{ work.department | upper}}</p>
+                <p>Employee Unique ID : {{ work.employee_unique_id }}</p>
               {% if work.freeze == True %}
                   <p class="lead text-center" style="color: #f00; margin-top: 18px;">This employee is frozen</p>
               {% else %}
@@ -28,5 +29,23 @@
         {% empty %}
             <p class="lead text-center">There are no employ record at the moment</p>
         {% endfor %}
+        <hr>
+    </div>
+    <div class="pagination container row mt-5 pt-5">
+        <div class="col-md-4 col-sm-5"></div>
+        <span class="step-links">
+            {% if users.has_previous %}
+                <p class="d-inline "><a href="?page={{ users.previous_page_number }}">previous</a></p>
+            {% endif %}
+    
+            <span class="current">
+                <p class="d-inline px-3">Page {{ users.number }} of {{ users.paginator.num_pages }}.</p>
+            </span>
+    
+            {% if users.has_next %}
+                <p class="d-inline"><a href="?page={{ users.next_page_number }}">next</a></p>
+            {% endif %}
+        </span>
+        <div class="col-md-4 col-sm-5"></div>
     </div>
 {% endblock %}

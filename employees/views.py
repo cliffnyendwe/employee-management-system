@@ -12,21 +12,22 @@ from django.contrib import messages
 
 from .forms import (AddEmployeeForm, UpdateEmployeeForm,)
 from .models import Employees
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
+def all_employees(request,*args,**kwargs):
+    users = Employees.objects.filter().order_by('-id')
+    paginator = Paginator(users,10) 
+    page = request.GET.get('page')
+    
 
-# show all employees
-class AllEmployeesView(ListView):
-    template_name = 'employees/all_employees.html'
-    # template_name = 'employees/all_employees_table.html'
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
 
-    def get_queryset(self):
-        co = Employees.objects.filter().order_by('-id')
-        return co
-
-    def get_context_data(self, **kwargs):
-        context = super(AllEmployeesView, self).get_context_data(**kwargs)
-        context['title'] = 'All Employees'
-        return context
+    return render(request,'employees/all_employees.html',{'users':users})
 
 
 # show employee detail
@@ -34,9 +35,10 @@ class EmployeeDetailView(DetailView):
     template_name = 'employees/employee_detail.html'
 
     def get_queryset(self):
-        co = Employees.objects.filter(id=self.kwargs['pk'])
-        return co
+        unique = Employees.objects.filter(id=self.kwargs['pk'])
+        return unique
 
+    
     def get_context_data(self, **kwargs):
         context = super(EmployeeDetailView, self).get_context_data(**kwargs)
         context['title'] = 'Employee'
@@ -60,8 +62,8 @@ class EmployeeUpdateView(UpdateView):
     template_name = 'employees/employee_update.html'
 
     def get_queryset(self):
-        co = Employees.objects.filter(id=self.kwargs['pk'])
-        return co
+        unique = Employees.objects.filter(id=self.kwargs['pk'])
+        return unique
 
     def get_context_data(self, **kwargs):
         context = super(EmployeeUpdateView, self).get_context_data(**kwargs)
@@ -69,36 +71,24 @@ class EmployeeUpdateView(UpdateView):
         return context
 
 
+
 # delete employee if not connected to a contract
 class EmployeeDeleteView(DeleteView):
     template_name = 'employees/employee_detail.html'
 
     def post(self, *args, **kwargs):
-        co = Employees.objects.filter(id=self.kwargs['pk'], freeze=False).first()
-        contract_status = co.contract
+        unique = Employees.objects.filter(id=self.kwargs['pk'], freeze=False).first()
+        contract_status = unique.contract
         if contract_status is None or contract_status == '':
-            co.delete()
+            unique.delete()
             return redirect(reverse('employees:all'))
         else:
-            co.freeze = True
-            co.save()
+            unique.freeze = True
+            unique.save()
             messages.error(self.request, 'you can not delete this employee because he has a contract')
             return redirect(reverse('employees:all'))
 
 
-def index(request):
-    user_list = User.objects.all()
-    page = request.GET.get('page', 1)
-
-    paginator = Paginator(user_list, 10)
-    try:
-        users = paginator.page(page)
-    except PageNotAnInteger:
-        users = paginator.page(1)
-    except EmptyPage:
-        users = paginator.page(paginator.num_pages)
-
-    return render(request, 'list.html', { 'users': users })
 
 
 

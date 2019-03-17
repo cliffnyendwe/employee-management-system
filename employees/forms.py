@@ -18,7 +18,7 @@ class AddEmployeeForm(forms.ModelForm):
         attrs={
             'placeholder': 'Employee Unique ID',
             'class': 'form-control',
-            'type': 'number',
+            # 'type': 'number',
         }))
    
     department = forms.CharField(label='Department', widget=forms.TextInput(
@@ -42,26 +42,27 @@ class AddEmployeeForm(forms.ModelForm):
 
     class Meta:
         model = Employees
-        fields = [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'employee_unique_id',
-            'contract',
-            'department',
-            'email',
-        ]
+        fields = '__all__'
 
     def clean_employee_unique_id(self):
         employee_unique_id = self.cleaned_data.get('employee_unique_id')
-        co = Employees.objects.filter(employee_unique_id=employee_unique_id)
-        if co.exists():
-            raise forms.ValidationError('This Employee is already Added before!')
+        unique = Employees.objects.filter(employee_unique_id=employee_unique_id)
+        if unique.exists():
+            raise forms.ValidationError('This Employee exist')
         if int(employee_unique_id) <= 9:
             raise forms.ValidationError('Employee Unique ID must be bigger than 10!')
         if len(str(employee_unique_id)) < 10 or len(str(employee_unique_id)) > 15:
             raise forms.ValidationError('Employee Unique ID must be more than 10 values')
         return int(employee_unique_id)
+
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        unique = Employees.objects.filter(email=email)
+        if unique.exists():
+            raise forms.ValidationError('This Employee is already Added before!')
+        return int(email)
+
 
 
 class UpdateEmployeeForm(forms.ModelForm):
@@ -104,23 +105,23 @@ class UpdateEmployeeForm(forms.ModelForm):
 
     class Meta:
         model = Employees
-        fields = [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'employee_unique_id',
-            'contract',
-            'department',
-            'email',
-         
-        ]
+        fields = '__all__'
+          
 
     def clean_employee_unique_id(self):
         employee_unique_id = self.cleaned_data.get('employee_unique_id')
         if int(employee_unique_id) <= 9:
             raise forms.ValidationError('Employee Unique ID must be bigger than 10!')
         if len(str(employee_unique_id)) < 10 or len(str(employee_unique_id)) > 15:
-            raise forms.ValidationError('Employee Unique ID must be more than 10 values')
+            raise forms.ValidationError('Employee Unique ID must be more than 10 digits')
         return int(employee_unique_id)
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        unique = Employees.objects.filter(email=email)
+        if unique.exists():
+            raise forms.ValidationError('This Employee is already Added before!')
+        return int(email)
+
 
 

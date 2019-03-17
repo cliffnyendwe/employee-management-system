@@ -33,9 +33,9 @@ class Employees(models.Model):
 # This is the function for saving employee's department
 def post_save_employee_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        co = Employees.objects.filter(id=instance.id, department=instance.department)
-        if co.exists() and co.count() == 1:
-            employee = co.first()
+        unique = Employees.objects.filter(id=instance.id, department=instance.department)
+        if unique.exists() and unique.count() == 1:
+            employee = unique.first()
             department = employee.department
             if department == 'FINANCE':
                 employee.save()
