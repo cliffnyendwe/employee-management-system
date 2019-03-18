@@ -14,6 +14,12 @@ from .forms import (AddEmployeeForm, UpdateEmployeeForm,)
 from .models import Employees
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import  Employees
+from .serializer import EmployeesSerializer
+
 def all_employees(request,*args,**kwargs):
     users = Employees.objects.filter().order_by('-id')
     paginator = Paginator(users,10) 
@@ -87,6 +93,12 @@ class EmployeeDeleteView(DeleteView):
             unique.save()
             messages.error(self.request, 'you can not delete this employee because he has a contract')
             return redirect(reverse('employees:all'))
+
+class EmployeesList(APIView):
+    def get(self, request, format=None):
+        all_merch = EmloyeesMerch.objects.all()
+        serializers = EmployeesSerializer(all_merch, many=True)
+        return Response(serializers.data)
 
 
 

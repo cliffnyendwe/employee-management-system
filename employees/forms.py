@@ -62,6 +62,7 @@ class AddEmployeeForm(forms.ModelForm):
         if unique.exists():
             raise forms.ValidationError('This Employee is already Added before!')
         return int(email)
+        
 
 
 
@@ -122,6 +123,9 @@ class UpdateEmployeeForm(forms.ModelForm):
         if unique.exists():
             raise forms.ValidationError('This Employee is already Added before!')
         return int(email)
+
+
+
 
 
 

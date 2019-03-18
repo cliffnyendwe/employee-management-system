@@ -21,7 +21,7 @@ class Employees(models.Model):
     department = models.CharField(choices=Department_CHOICES, max_length=25)
     contract = models.CharField(max_length=60, null=True)
     updated = models.DateTimeField(auto_now=True)
-    phone_number = models.PositiveIntegerField()
+    phone_number = models.PositiveIntegerField(unique=True)
     email = models.EmailField(max_length = 60, default = '@gmail.com')
 
     def __str__(self):

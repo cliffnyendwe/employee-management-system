@@ -10,12 +10,11 @@
             <th>Email</th>
             <th>Contract</th>
             <th>Department</th>
-            <th>Update</th>
           
           </tr>
         </thead>
         <tbody>
-        {% for emp in object_list %}
+        {% for work in object_list %}
           <tr>
             <td><a href="{% url 'employees:detail' work.id %}">{{ work.first_name }}</a></td>
             <td>{{ work.last_name}}</td>

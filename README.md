@@ -17,10 +17,6 @@ This is my password
 This awesome application is meant to keep employers records and also to manage the employers. This will be possible as it requires the employees to give out all their details including the employees unique number.
 
 
-# Live Demo
-
-Run this url link:https://github.com/cliffnyendwe/employee-management-system.git
-
 # Contacts
 To find me, use: cliffnyendwe2018@gmail.com
 0710755176
@@ -91,6 +87,43 @@ The project is under license by MIT
 # Prerequisites
 You will need the following things properly installed on your computer.
 
-* atom
+* visual studio
 * git
 * github
+
+
+# How to deploy to heroku
+
+* Sgn up to heroku account if you dont have an account.
+* Then install the Heroku Toolbelt. It is a command line tool to manage your Heroku apps.
+* After installing the Heroku Toolbelt, open a terminal and login to your account:
+
+* $ heroku login
+* Enter your Heroku credentials.
+* Email: gmail.com
+* Password (typing will be hidden):
+* Authentication successful.
+
+# Add the following:
+
+* Add a Procfile in the project root;
+* Add requirements.txt file with all the requirements in the project root;
+* Add Gunicorn to requirements.txt;
+* A runtime.txt to specify the correct Python version in the project root;
+* Configure whitenoise to serve static files.
+
+* Add this to Procfile : web: gunicorn your_project_name.wsgi --log-file -
+
+* Configure static related parameter in settings.py
+* Pip install whitenise
+* pip freeze > requirements.txt
+* pip install python-decouple
+* pip install dj-database-url
+* Edit settings.py to enable decouple to use the .env configurations.
+* Create heroku app eg: heroku create app_name
+* Add postgress addon : heroku addons:create heroku-postgresql:hobby-dev
+* Add all your configurations in .env file directly to heroku by running the this command: heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')
+* git push heroku master
+* Run migration with this command : heroku run python manage.py migrate
+*  Push your local db to postgres with this command : heroku pg:push mylocaldb DATABASE_URI --app heroku app_name
+

@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^employees/', include('employees.urls', namespace='employees')),
     # url(r'^$', AllEmployeesView.as_view(), name='main_home'),
-    url(r'^all_employees', all_employees, name='all_employees')
+    url(r'^', all_employees, name='all_employees')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

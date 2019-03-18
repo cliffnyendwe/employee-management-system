@@ -41,3 +41,19 @@ li{
 p{
     font-size:large;
 }
+
+td{
+    font-size:large;
+}
+
+th{
+    font-size:large;
+}
+
+tr{
+    font-size:x-large;
+}
+
+.tables{
+    border: 2px solid black;
+}

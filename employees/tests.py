@@ -9,7 +9,7 @@ class TestCalls(TestCase):
                                     'first_name': 'Cliff',
                                     'last_name': 'Nyendwe',
                                     'phone_number': '0710750000'
-                                    'employee_unique_id': 123456789101112,
+                                    'employee_unique_id':'123456789101112',
                                     'date_of_birth': 'cliffnyendwe2018@gmail.com',
                                     'department': [1],
                                    

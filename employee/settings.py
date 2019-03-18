@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'mathfilters',
+    'rest_framework',
     'employees.apps.EmployeesConfig',
 ]
 
