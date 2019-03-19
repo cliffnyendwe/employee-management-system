@@ -1,66 +1,72 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container">
-    <h3>
-        <hEmployees>
-    </h3>
-    <div class="tables">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Department</th>
-                    <th>Employee Unique ID</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for li in users %}
-                <tr>
-                    <td scope='row'><a href="{% url 'employees:detail' li.id %}">{{ li.first_name | upper }}</a></td>
-                    <td>{{li.last_name}}</td>
-                    <td>{{li.phone_number}}</td>
-                    <td>{{li.email}}</td>
-                    <td>{{li.department}}</td>
-                    <td>{{li.employee_unique_id}}</td>
-                </tr>
-                <td>
-                    <a href="{% url 'employees:update' li.id %}" class="btn btn-info btn-raised btn-sm">
-                        <i class="fa fa-user"></i> Edit Employee
-                    </a>
-                </td>
-                <td>
-                    <!-- Button trigger modal -->
-                    <button class="btn btn-danger btn-raised btn-sm" href="" data-toggle="modal" data-target="#delete_employee{{ li.id }}">
-                        <i class="fa fa-times"></i> Delete Me
-                    </button>
-                    {% include 'employees/delete_employee_modal.html' %}
-                </td>
+        <div class="tables">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
+                        <th>Department</th>
+                        <th>Employee ID</th>
+                        <th>Edit/Delete Employee</th>
 
-                {% empty %}
-                <p class="lead text-center">No employees record yet</p>
-                {% endfor %}
-            </tbody>
-        </table>
 
-        <div class="pagination container row mt-5 pt-5">
-            <div class="col-md-4 col-sm-5"></div>
-            <span class="step-links">
-                {% if users.has_previous %}
-                <p class="d-inline "><a href="?page={{ users.previous_page_number }}">previous</a></p>
-                {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for li in users %}
+                    <tr>
+                        <td scope='row'><a href="{% url 'employees:detail' li.id %}">{{ li.first_name | upper }}</a></td>
+                        <td>{{li.last_name}}</td>
+                        <td>{{li.phone_number}}</td>
+                        <td>{{li.email_address}}</td>
+                        <td>{{li.department}}</td>
+                        <td>{{li.employee_id}}</td>
 
-                <span class="current">
-                    <p class="d-inline px-3">Page {{ users.number }} of {{ users.paginator.num_pages }}.</p>
+                        <td>
+                            <th>
+                            <a href="{% url 'employees:update' li.id %}" class="btn btn-outline-info btn-lg">
+                                <i class="fa fa-user"></i> Edit Employee
+                            </a>
+                            </th>
+                            <th>
+                            <button class="btn btn-outline-danger btn-lg" href="" data-toggle="modal" data-target="#delete_employee{{ li.id }}">
+                                <i class="fa fa-times"></i> Delete Me
+                            </button>
+                            </th>
+                    </tr>
+              
+                        <!-- Button trigger modal -->
+
+                        {% include 'employees/delete_employee_modal.html' %}
+                
+
+                    {% empty %}
+                    <p class="lead text-center">No employees record yet</p>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination container row mt-5 pt-5">
+                <div class="col-md-4 col-sm-5"></div>
+                <span class="step-links">
+                    {% if users.has_previous %}
+                    <p class="d-inline "><a href="?page={{ users.previous_page_number }}">previous</a></p>
+                    {% endif %}
+
+                    <span class="current">
+                        <p class="d-inline px-3">Page {{ users.number }} of {{ users.paginator.num_pages }}.</p>
+                    </span>
+
+                    {% if users.has_next %}
+                    <p class="d-inline"><a href="?page={{ users.next_page_number }}">next</a></p>
+                    {% endif %}
                 </span>
-
-                {% if users.has_next %}
-                <p class="d-inline"><a href="?page={{ users.next_page_number }}">next</a></p>
-                {% endif %}
-            </span>
-            <div class="col-md-4 col-sm-5"></div>
+                <div class="col-md-4 col-sm-5"></div>
+            </div>
         </div>
     </div>
 </div>

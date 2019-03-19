@@ -9,16 +9,16 @@ from django.views.generic import (
 )
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib import messages
-
 from .forms import (AddEmployeeForm, UpdateEmployeeForm,)
 from .models import Employees
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import  Employees
 from .serializer import EmployeesSerializer
+from rest_framework import generics
+
+# from myapp.models import Employees
 
 def all_employees(request,*args,**kwargs):
     users = Employees.objects.filter().order_by('-id')
@@ -88,21 +88,22 @@ class EmployeeDeleteView(DeleteView):
         if contract_status is None or contract_status == '':
             unique.delete()
             return redirect(reverse('employees:all'))
-        else:
-            unique.freeze = True
+        
             unique.save()
             messages.error(self.request, 'you can not delete this employee because he has a contract')
             return redirect(reverse('employees:all'))
 
-class EmployeesList(APIView):
+class EmployeesList(generics.ListCreateAPIView):
     def get(self, request, format=None):
-        all_merch = EmloyeesMerch.objects.all()
-        serializers = EmployeesSerializer(all_merch, many=True)
+        all_employees = Employees.objects.all()
+        serializers = EmployeesSerializer()
         return Response(serializers.data)
 
+# # uploadig csv file
 
-
-
-
-
+# Employees.objects.from_csv(
+#     "./data.csv",  # The path to a source file (a Python file object is also acceptable)
+#     dict(first_name = 'FIRST NAME', last_name = 'LAST NAME', phone_number = 'PHONE NUMBER', email_addree = 'EMAIL ADDRESS', employee_id = 'EMPLOYEE ID', department = 'DEPARTMENT')  # A crosswalk of model fields to CSV headers.
+# )
+# Employees.objects.to_csv("./data.csv")
 

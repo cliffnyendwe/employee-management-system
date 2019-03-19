@@ -7,7 +7,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Phone Number</th>
-            <th>Email</th>
+            <th>Email Address</th>
             <th>Contract</th>
             <th>Department</th>
           
@@ -19,7 +19,7 @@
             <td><a href="{% url 'employees:detail' work.id %}">{{ work.first_name }}</a></td>
             <td>{{ work.last_name}}</td>
             <td>{{ work.phone_number }}</td>
-            <td>{{ work.email }}</td>
+            <td>{{ work.email_address }}</td>
             <td>{{ work.department }}</td>
             <td>{{ work.contract }}</td>
             <td>
