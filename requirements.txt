@@ -7,6 +7,7 @@ django-heroku==0.3.1
 django-mathfilters==0.4.0
 django-postgres-copy==2.3.7
 djangorestframework==3.9.0
+gunicorn==19.9.0
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
 python-decouple==3.1
