@@ -18,12 +18,12 @@ class Employees(models.Model):
  
     first_name = models.CharField(max_length=60) 
     last_name = models.CharField(max_length=60)
-    employee_id = models.CharField(max_length = 10, default='7584965894')
+    employee_id = models.CharField(max_length = 10)
     department = models.CharField(choices=Department_CHOICES, max_length=25)
     contract = models.CharField(max_length=60, null=True)
     updated = models.DateTimeField(auto_now=True)
     phone_number = models.PositiveIntegerField(unique=True)
-    email_address = models.EmailField(max_length = 60, default = '@gmail.com')
+    email_address = models.EmailField(max_length = 60)
     objects = CopyManager()
 
     def __str__(self):

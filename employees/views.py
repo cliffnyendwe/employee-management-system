@@ -94,10 +94,12 @@ class EmployeeDeleteView(DeleteView):
             return redirect(reverse('employees:all'))
 
 class EmployeesList(generics.ListCreateAPIView):
-    def get(self, request, format=None):
-        all_employees = Employees.objects.all()
-        serializers = EmployeesSerializer()
-        return Response(serializers.data)
+    serializer_class = EmployeesSerializer
+    queryset = Employees.objects.all()
+    # def get(self, request, format=None):
+    #     all_employees = Employees.objects.all()
+    #     serializers = EmployeesSerializer()
+    #     return Response(serializers.data)
 
 # # uploadig csv file
 

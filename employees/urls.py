@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/$', EmployeeDetailView.as_view(), name='detail'), # urls for employees details
     url(r'^(?P<pk>\d+)/update/$', EmployeeUpdateView.as_view(), name='update'), # urls for updating employees
     url(r'^(?P<pk>\d+)/delete/$', EmployeeDeleteView.as_view(), name='delete'), # urls for deleting employee
-    url(r'^api/employees/$', views.EmployeesList.as_view()),
+    url(r'^api/$', views.EmployeesList.as_view()),
     # url(r'^(?P<pk>\d+)/upload/$', UploadView.as_view(), name='upload'),  # urls for uploading csv file
 ]
