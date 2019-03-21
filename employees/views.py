@@ -96,10 +96,7 @@ class EmployeeDeleteView(DeleteView):
 class EmployeesList(generics.ListCreateAPIView):
     serializer_class = EmployeesSerializer
     queryset = Employees.objects.all()
-    # def get(self, request, format=None):
-    #     all_employees = Employees.objects.all()
-    #     serializers = EmployeesSerializer()
-    #     return Response(serializers.data)
+   
 
 # # uploadig csv file
 
