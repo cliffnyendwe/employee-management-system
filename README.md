@@ -79,7 +79,9 @@ pytz==2018.9
 
 This are features that i didnt manage to accomplish but soon i will include them.
 
-* Comment form.
+* The CSV upload
+* The modal
+
 
 # License
 The project is under license by MIT
